@@ -1,0 +1,73 @@
+<ng-template #content let-modal>
+  <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add Data</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">firstName</th>
+            <th scope="col">lastName</th>
+            <th scope="col">email</th>
+            <th scope="col">phone</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="number" formControlName="id" /></td>
+            <td><input type="text" formControlName="firstName" /></td>
+            <td><input type="text" formControlName="lastName" /></td>
+            <td><input type="email" formControlName="email" /></td>
+            <td><input type="tel" formControlName="phone" /></td>
+          </tr>
+        </tbody>
+      </table>
+      <h6>address:</h6>
+      <table class="table table-striped" formGroupName="address">
+        <thead>
+          <tr>
+            <th scope="col">streetAddress</th>
+            <th scope="col">city</th>
+            <th scope="col">state</th>
+            <th scope="col">zip</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="text" formControlName="streetAddress" /></td>
+            <td><input type="text" formControlName="city" /></td>
+            <td><input type="text" formControlName="state" /></td>
+            <td><input type="text" formControlName="zip" /></td>
+          </tr>
+        </tbody>
+      </table>
+      <h6>description:</h6>
+      <textarea cols="60" rows="3" formControlName="description"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="modal.close('Save click')"
+        type="submit"
+        [disabled]="!dataForm.valid"
+      >
+        Add
+      </button>
+    </div>
+  </form>
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">
+  Add data
+</button>
