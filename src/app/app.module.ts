@@ -21,6 +21,7 @@ import { NgbdSortableHeader } from './sortable.directive';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     NgbModule,
     StoreModule.forRoot({ table: tableReducer }, {}),
     StoreDevtoolsModule.instrument({

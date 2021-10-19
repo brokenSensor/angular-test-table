@@ -11,12 +11,39 @@ export const selectFilteredRows = createSelector(
     selectSearchQuery: string,
     selectSortQuery: ISortQuery
   ) => {
+    let filteredRows;
     let sortedRows;
 
-    if (selectSortQuery.column === '' || selectSortQuery.direction === '') {
-      return selectRows;
+    if (selectSearchQuery !== '') {
+      filteredRows = [...selectRows].filter((value) => {
+        if (
+          String(value.id)
+            .toLowerCase()
+            .includes(selectSearchQuery.toLowerCase()) ||
+          String(value.firstName)
+            .toLowerCase()
+            .includes(selectSearchQuery.toLowerCase()) ||
+          String(value.lastName)
+            .toLowerCase()
+            .includes(selectSearchQuery.toLowerCase()) ||
+          String(value.email)
+            .toLowerCase()
+            .includes(selectSearchQuery.toLowerCase()) ||
+          String(value.phone)
+            .toLowerCase()
+            .includes(selectSearchQuery.toLowerCase())
+        ) {
+          return true;
+        } else return false;
+      });
     } else {
-      sortedRows = [...selectRows].sort((a, b) => {
+      filteredRows = selectRows;
+    }
+
+    if (selectSortQuery.column === '' || selectSortQuery.direction === '') {
+      return filteredRows;
+    } else {
+      sortedRows = [...filteredRows].sort((a, b) => {
         const res =
           (a as any)[selectSortQuery.column] <
           (b as any)[selectSortQuery.column]

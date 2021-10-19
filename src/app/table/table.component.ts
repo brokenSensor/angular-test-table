@@ -3,7 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.state';
 import { SortEvent } from '../sortable.directive';
-import { loadState, setSortQuery } from './table.actions';
+import { loadState, setSearchQuery, setSortQuery } from './table.actions';
 import { IData } from './table.reducer';
 import { selectFilteredRows } from './table.selectors';
 
@@ -21,6 +21,7 @@ export class TableComponent {
   dataItems = 0;
   originalRows: IData[] = [];
   paginatedRows: IData[] = [];
+  searchTerm = '';
 
   constructor(private modalService: NgbModal, private store: Store<AppState>) {
     this.store.dispatch(loadState());
@@ -48,6 +49,11 @@ export class TableComponent {
 
   onSort({ column, direction }: SortEvent) {
     this.store.dispatch(setSortQuery({ sortQuery: { column, direction } }));
+    this.refreshData();
+  }
+
+  search() {
+    this.store.dispatch(setSearchQuery({ searchQuery: this.searchTerm }));
     this.refreshData();
   }
 }
