@@ -1,15 +1,137 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">id</th>
-      <th scope="col">firstName</th>
-      <th scope="col">lastName</th>
-      <th scope="col">email</th>
-      <th scope="col">phone</th>
+      <th scope="col" sortable="id" (sort)="onSort($event)">
+        id
+
+        <b
+          *ngIf="
+            (sortQuery$ | async)?.column === 'id' &&
+            (sortQuery$ | async)?.direction === 'asc'
+          "
+          >🠕</b
+        >
+        <b
+          *ngIf="
+            (sortQuery$ | async)?.column === 'id' &&
+            (sortQuery$ | async)?.direction === 'desc'
+          "
+          >🠗</b
+        >
+      </th>
+      <th scope="col" sortable="firstName" (sort)="onSort($event)">
+        firstName
+        <b
+          *ngIf="
+            (sortQuery$ | async)?.column === 'firstName' &&
+            (sortQuery$ | async)?.direction === 'asc'
+          "
+          >🠕</b
+        >
+        <b
+          *ngIf="
+            (sortQuery$ | async)?.column === 'firstName' &&
+            (sortQuery$ | async)?.direction === 'desc'
+          "
+          >🠗</b
+        >
+      </th>
+      <th scope="col" sortable="lastName" (sort)="onSort($event)">
+        lastName
+        <b
+          *ngIf="
+            (sortQuery$ | async)?.column === 'lastName' &&
+            (sortQuery$ | async)?.direction === 'asc'
+          "
+          >🠕</b
+        >
+        <b
+          *ngIf="
+            (sortQuery$ | async)?.column === 'lastName' &&
+            (sortQuery$ | async)?.direction === 'desc'
+          "
+          >🠗</b
+        >
+      </th>
+      <th scope="col" sortable="email" (sort)="onSort($event)">
+        email
+        <b
+          *ngIf="
+            (sortQuery$ | async)?.column === 'email' &&
+            (sortQuery$ | async)?.direction === 'asc'
+          "
+          >🠕</b
+        >
+        <b
+          *ngIf="
+            (sortQuery$ | async)?.column === 'email' &&
+            (sortQuery$ | async)?.direction === 'desc'
+          "
+          >🠗</b
+        >
+      </th>
+      <th scope="col" sortable="phone" (sort)="onSort($event)">
+        phone
+        <b
+          *ngIf="
+            (sortQuery$ | async)?.column === 'phone' &&
+            (sortQuery$ | async)?.direction === 'asc'
+          "
+          >🠕</b
+        >
+        <b
+          *ngIf="
+            (sortQuery$ | async)?.column === 'phone' &&
+            (sortQuery$ | async)?.direction === 'desc'
+          "
+          >🠗</b
+        >
+      </th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let row of rows$ | async">
+    <tr *ngFor="let row of paginatedRows" (click)="open(content)">
+      <ng-template #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Data</h4>
+          <button
+            type="button"
+            class="close"
+            aria-label="Close"
+            (click)="modal.dismiss('Cross click')"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>
+            Выбран пользователь: <b>{{ row.firstName }} {{ row.lastName }}</b>
+          </p>
+          <p>Описание:</p>
+          <textarea>{{ row.description }}</textarea>
+          <p>
+            Адрес проживания: <b>{{ row.address.streetAddress }}</b>
+          </p>
+          <p>
+            Город: <b>{{ row.address.city }}</b>
+          </p>
+          <p>
+            Провинция/штат: <b>{{ row.address.state }}</b>
+          </p>
+          <p>
+            Индекс: <b>{{ row.address.zip }}</b>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-outline-dark"
+            (click)="modal.close()"
+          >
+            Ok
+          </button>
+        </div>
+      </ng-template>
       <td>{{ row.id }}</td>
       <td>{{ row.firstName }}</td>
       <td>{{ row.lastName }}</td>
@@ -18,3 +140,13 @@
     </tr>
   </tbody>
 </table>
+
+<div class="d-flex p-2">
+  <ngb-pagination
+    [collectionSize]="dataItems"
+    [(page)]="page"
+    [pageSize]="pageSize"
+    (pageChange)="refreshData()"
+  >
+  </ngb-pagination>
+</div>

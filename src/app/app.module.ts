@@ -10,9 +10,15 @@ import { ModalFormComponent } from './modal-form/modal-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
+import { NgbdSortableHeader } from './sortable.directive';
 
 @NgModule({
-  declarations: [AppComponent, TableComponent, ModalFormComponent],
+  declarations: [
+    AppComponent,
+    TableComponent,
+    ModalFormComponent,
+    NgbdSortableHeader,
+  ],
   imports: [
     BrowserModule,
     NgbModule,

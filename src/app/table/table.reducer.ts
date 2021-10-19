@@ -21,20 +21,24 @@ export interface IData {
   description?: string;
 }
 
+export interface ISortQuery {
+  column: string;
+  direction: string;
+}
+
 export interface ITableState {
   rows: IData[];
   searchQuery: string;
-  sortQuery: string;
-  page: number;
-  pages: number;
+  sortQuery: ISortQuery;
 }
 
 export const initialState: ITableState = {
   rows: [],
   searchQuery: '',
-  sortQuery: '',
-  page: 1,
-  pages: 1,
+  sortQuery: {
+    column: '',
+    direction: '',
+  },
 };
 
 const _tableReducer = createReducer(
