@@ -34,15 +34,15 @@ export const selectFilteredRows = createSelector(
             .includes(selectSearchQuery.toLowerCase())
         ) {
           return true;
-        } else return false;
+        } else {
+          return false;
+        }
       });
     } else {
       filteredRows = selectRows;
     }
 
-    if (selectSortQuery.column === '' || selectSortQuery.direction === '') {
-      return filteredRows;
-    } else {
+    if (selectSortQuery.column !== '' || selectSortQuery.direction !== '') {
       sortedRows = [...filteredRows].sort((a, b) => {
         const res =
           (a as any)[selectSortQuery.column] <
@@ -54,6 +54,8 @@ export const selectFilteredRows = createSelector(
             : 0;
         return selectSortQuery.direction === 'asc' ? res : -res;
       });
+    } else {
+      return filteredRows;
     }
 
     return sortedRows;

@@ -51,6 +51,7 @@ const _tableReducer = createReducer(
 
     return loadedState;
   }),
+
   on(addRow, (state, payload) => {
     const newState = {
       ...state,
@@ -60,7 +61,9 @@ const _tableReducer = createReducer(
 
     return newState;
   }),
+
   on(setSearchQuery, (state, { searchQuery }) => ({ ...state, searchQuery })),
+
   on(setSortQuery, (state, { sortQuery }) => ({ ...state, sortQuery }))
 );
 

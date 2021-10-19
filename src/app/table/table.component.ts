@@ -28,9 +28,8 @@ export class TableComponent {
     this.rows$.subscribe((event) => {
       this.dataItems = event.length;
       this.originalRows = event;
+      this.refreshData();
     });
-
-    this.refreshData();
   }
 
   open(content: any) {
@@ -49,11 +48,9 @@ export class TableComponent {
 
   onSort({ column, direction }: SortEvent) {
     this.store.dispatch(setSortQuery({ sortQuery: { column, direction } }));
-    this.refreshData();
   }
 
-  search() {
+  onSearch() {
     this.store.dispatch(setSearchQuery({ searchQuery: this.searchTerm }));
-    this.refreshData();
   }
 }

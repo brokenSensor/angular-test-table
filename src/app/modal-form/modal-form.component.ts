@@ -38,7 +38,6 @@ export class ModalFormComponent {
 
   onSubmit() {
     this.store.dispatch(addRow(this.dataForm.value));
-    console.log(this.dataForm.value);
   }
 
   constructor(private modalService: NgbModal, private store: Store<AppState>) {}

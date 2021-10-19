@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { IData, ISortQuery } from './table.reducer';
 
 export const loadState = createAction('[Table Component] LoadState');
+
 export const addRow = createAction('[Table Component] AddRow', props<IData>());
 
 export const setSearchQuery = createAction(
